@@ -177,4 +177,20 @@ public class EmployeeService {
             return false;
         }
     }
+
+    public String deleteTable(String tableName) {
+        try {
+            // Create a DeleteTable request
+            DeleteTableRequest deleteTableRequest = DeleteTableRequest.builder()
+                    .tableName(tableName)
+                    .build();
+
+            // Call the deleteTable API
+            DeleteTableResponse response = dynamoDbClient.deleteTable(deleteTableRequest);
+
+            return "Table '" + tableName + "' deleted successfully. Status: " + response.sdkHttpResponse().statusCode();
+        } catch (Exception e) {
+            return "Error deleting table '" + tableName + "': " + e.getMessage();
+        }
+    }
 }

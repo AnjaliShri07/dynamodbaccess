@@ -2,6 +2,7 @@ package com.springbbot.dynamodb.dynamodbaccess.controller;
 
 import com.springbbot.dynamodb.dynamodbaccess.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @PostMapping("/createTable")
+    @PostMapping("/createTable/{}")
     public String createTable(@PathVariable("tableName") String tableName) {
         employeeService.createTable(tableName);
         return "Table created: "+tableName;
@@ -68,5 +69,10 @@ public class EmployeeController {
         }
     }
 
+    @DeleteMapping("/table/{tableName}")
+    public ResponseEntity<String> deleteTable(@PathVariable String tableName) {
+        String result = employeeService.deleteTable(tableName);
+        return ResponseEntity.ok(result);
+    }
 
 }
